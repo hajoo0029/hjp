@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class DataLocalConnector_BleTestSet {
 	
 	
-    //String driver = "com.mysql.jdbc.Driver";
+    String driver = "com.mysql.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/ACUB";
     
 
@@ -35,7 +35,7 @@ public class DataLocalConnector_BleTestSet {
           
           try{
         	
-        	 // Class.forName("com.mysql.jdbc.Driver");
+        	 Class.forName(driver);
         	  con = DriverManager.getConnection(url, dbUser, dbPasswd);
         	  
           
