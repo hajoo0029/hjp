@@ -11,14 +11,14 @@ public class DataLocalConnector_BleTestSet {
 	
 	
     String driver = "com.mysql.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/ACUB";
+    String url = "jdbc:mysql://localhost:3306/ACUB?autoReconnect=true&useSSL=false";
     
 
     String dbUser = "juha";
     String dbPasswd = "1234";
     Connection con;
     
-    boolean test = false;
+    boolean test = true;
     
     private IDPAIR[] pairs;
 	int pairsize;
@@ -49,7 +49,7 @@ public class DataLocalConnector_BleTestSet {
               try{
             	  
               Statement st = con.createStatement();
-              
+              System.out.println("sql:select");
               String sql ="SELECT my_id, other_id, rssi, mTime " +
                       "FROM testset_ble";
 
@@ -76,20 +76,29 @@ public class DataLocalConnector_BleTestSet {
 		
 		boolean samepair=false;
 		IDPAIR thispair=null;
+		System.out.println(size);
+		if(this.pairsize==0) {
+			IDPAIR temp=new IDPAIR(mmmi,yyyi);
+			pairsize++;
+			thispair=temp;
+			mm.put(temp, new SIGINF());
+			System.out.println("first pair add");
 		
+		}else {
 		for(int i=0; i<this.pairsize; i++) {
 			if(this.pairs[i].isSame(mmmi, yyyi)) {
 				samepair=true;
 				thispair=pairs[i];
-				
+				System.out.println("issame");
 			}else {
 				IDPAIR temp=new IDPAIR(mmmi,yyyi);
-				temp=this.pairs[i];
 				pairsize++;
 				thispair=temp;
-				mm.put(thispair, new SIGINF());
+				mm.put(temp, new SIGINF());
+				System.out.println("is not same");
 			}
 			
+		}
 		}
 		
 		mm.get(thispair).stackFRSSI(rst.getInt("rssi"));
