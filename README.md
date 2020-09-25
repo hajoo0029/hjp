@@ -1,3 +1,3 @@
 # hjp
 
-seb Project
+web Project
